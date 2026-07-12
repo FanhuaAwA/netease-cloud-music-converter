@@ -1,8 +1,15 @@
 # 网易云歌曲转换
 
-一个面向本地音乐文件的高性能 Python 工具。支持批量解析和转换 NCM 容器、检测多种音频格式、整理目录结构，并自动复制同名歌词与封面文件。
+一个面向本地音乐文件的转换与整理项目，提供高性能 Python 桌面脚本和原生 Android 应用。支持批量解析 NCM 容器、检测多种音频格式、保留原始音质，并整理歌曲标签、封面与歌词。
 
 > 本仓库不包含任何歌曲、歌词或封面。请仅处理自己拥有或已获得合法授权的文件。
+
+## 版本选择
+
+| 版本 | 适用场景 | 入口 |
+| --- | --- | --- |
+| Python 脚本 | Windows、Linux、macOS 批量处理 | [`convert_ncm.py`](./convert_ncm.py) |
+| Android 应用「云澄」 | 手机端手动检测与转换 | [`安卓/`](./安卓/) |
 
 ## 功能特点
 
@@ -132,6 +139,25 @@ python convert_ncm.py --help
 
 如果文件之前已经被椒盐音乐扫描过但仍显示旧信息，请在椒盐音乐中重新扫描媒体库；必要时删除旧条目后再扫描。
 
+## Android 应用「云澄」
+
+Android 版本使用 Kotlin 与 Jetpack Compose 原生开发，不需要 Root、LSPosed、Python 环境或联网服务。
+
+- 通过系统目录选择器手动授权来源和输出目录，不申请全盘存储权限。
+- 手动检测和转换，不在后台自动扫描。
+- 支持 NCM、FLAC、MP3、WAV、M4A、OGG、Opus、AAC、APE 检测。
+- NCM 本地流式解密，自动保留内部真实格式，不执行有损转码。
+- 自动写入标题、歌手、专辑和内嵌封面，并复制同名 LRC 歌词。
+- 支持 1–4 路并发、逐首状态与格式统计。
+
+在手机中选择网易云下载目录，例如：
+
+```text
+/storage/emulated/0/Download/netease/cloudmusic/Music
+```
+
+完整使用说明见 [`安卓/README.md`](./安卓/README.md)。
+
 ## 编译与打包
 
 Python 脚本无需编译，可以直接运行。如果需要生成 Windows 单文件 EXE，可使用 PyInstaller：
@@ -148,6 +174,19 @@ dist\网易云歌曲转换.exe
 ```
 
 因为程序使用控制台数字菜单，请勿添加 `--windowed` 参数。
+
+Android 版本需要 JDK 17 或更高版本及 Android SDK 36：
+
+```powershell
+cd 安卓
+.\gradlew.bat :app:assembleDebug
+```
+
+生成的 APK 位于：
+
+```text
+安卓/app/build/outputs/apk/debug/app-debug.apk
+```
 
 也可以仅检查 Python 语法和生成字节码：
 
@@ -176,6 +215,12 @@ python convert_ncm.py --self-test
 .
 ├── convert_ncm.py
 ├── requirements.txt
+├── 安卓/
+│   ├── app/
+│   ├── gradle/
+│   ├── gradlew
+│   ├── gradlew.bat
+│   └── README.md
 ├── README.md
 └── .gitignore
 ```
