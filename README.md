@@ -35,8 +35,8 @@ NCM、FLAC、MP3、AAC、M4A、ALAC、OGG、Vorbis、Opus、Speex、WAV、WMA、
 克隆仓库：
 
 ```bash
-git clone https://github.com/FanhuaAwA/网易云歌曲转换.git
-cd 网易云歌曲转换
+git clone https://github.com/FanhuaAwA/netease-cloud-music-converter.git
+cd netease-cloud-music-converter
 ```
 
 建议创建虚拟环境：
